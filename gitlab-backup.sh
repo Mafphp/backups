@@ -29,14 +29,16 @@ fi
 # Use the provided timestamp
 TIMESTAMP="$1"
 
-# Start the backup process
-log_message "Starting ${APP_NAME} backup process."
 
 # Step 1: Remove previous backups
-log_message "Removing previous backups from $BACKUP_DIR in container $CONTAINER_NAME."
-docker exec $CONTAINER_NAME /bin/bash -c "rm -rf $BACKUP_DIR/*.tar"
+log_message "Removing previous backups from $BACKUP_SOURCE_DIR in container $CONTAINER_NAME."
+docker exec $CONTAINER_NAME /bin/bash -c "rm -rf $BACKUP_SOURCE_DIR/*.tar"
 log_message "Previous backups removed."
+echo "Previous backups removed."
 
+# Start the backup process
+log_message "Starting ${APP_NAME} backup process."
+echo "Starting ${APP_NAME} backup process."
 # Run GitLab backup
 docker exec $CONTAINER_NAME gitlab-rake gitlab:backup:create
 log_message "GitLab backup created inside the container."
