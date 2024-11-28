@@ -32,6 +32,7 @@ BACKUP_DIR="$BACKUP_TARGET_DIR/$TIMESTAMP"
 
 # Sync the backup to Google Drive
 cd /srv/restic && docker compose run --rm restic backup /backup/$TIMESTAMP
+cd /srv/restic && docker compose run --rm restic forget --prune --keep-weekly 4 --keep-monthly 12 --keep-yearly 10
 
 # Remove old backups from local disk
 LOCAL_BACKUPS=$(ls -1d $BACKUP_TARGET_DIR/*/ | sort -r | tail -n +$(($MAX_BACKUPS + 1)))
